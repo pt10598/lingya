@@ -68,6 +68,6 @@ class V3Tests(unittest.TestCase):
   self.assertNotIn('_body',row.data())
  def test_original_page_has_mobile_filter_and_clear(self):
   page=self.c.get('/').get_data(as_text=True)
-  for x in ['更多選擇','清除選擇，回到首頁','最近活動','重要生活通知','有新消息，按這裡更新','state.js?v=4.0']:self.assertIn(x,page)
+  for x in ['更多選擇','清除選擇，回到首頁','最近活動','重要生活通知','有新消息，按這裡更新','state.js?v=5.0']:self.assertIn(x,page)
 
 if __name__=='__main__':unittest.main()

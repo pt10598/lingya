@@ -14,6 +14,8 @@ function card(it){
  if(event){let dateText='日期尚未確認，點開看說明';if(it.starts)dateText=it.starts.replaceAll('-','／')+(it.ends&&it.ends!==it.starts?' 至 '+it.ends.replaceAll('-','／'):'');facts.append(node('p','活動日期：'+dateText));if(it.ends&&it.ends<today())facts.append(node('p','這個活動已結束','ended-label'))}
  else if(benefit&&it.deadline)facts.append(node('p',(it.deadline<today()?'公告截止日已過：':'公告截止日：')+it.deadline.replaceAll('-','／')));
  else if(it.published)facts.append(node('p','公告日期：'+it.published.replaceAll('-','／')));
+ if(event)facts.append(node('p','地點：'+(it.location||'尚未提供，請查看官方公告')));
+ if(it.source)facts.append(node('p','發布單位：'+(names[it.source]||it.source),'source-label'));
  c.append(facts,detailLink(it,event?'看活動詳情':benefit?'看補助說明':'看通知內容'));return c
 }
 function applyUI(){

@@ -205,6 +205,10 @@ def overview():
         week=count(Item.starts!='',Item.starts<=end,or_(Item.ends>=today,db.and_(Item.ends=='',Item.starts>=today))),
         dated=count(Item.starts!=''),undated=count(Item.category=='活動課程',Item.starts==''))
 
+@app.get('/rights')
+def rights():
+    return render_template('rights.html')
+
 @app.get('/services')
 def services():
     return render_template('services.html',source_list=sources())
@@ -252,7 +256,7 @@ def sitemap():
     from guides import GUIDES
     from xml.sax.saxutils import escape
     base=site_settings()['base_url'] or request.url_root.rstrip('/')
-    paths=['/','/guides','/about','/contact','/privacy','/sources','/services']+['/guides/'+g['slug'] for g in GUIDES]
+    paths=['/','/rights','/guides','/about','/contact','/privacy','/sources','/services']+['/guides/'+g['slug'] for g in GUIDES]
     rows=db.session.execute(select(Item.id).limit(1000)).scalars()
     paths+=['/events/'+i for i in rows]
     return Response('<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'+''.join('<url><loc>'+escape(base+p)+'</loc></url>' for p in paths)+'</urlset>',mimetype='application/xml')
