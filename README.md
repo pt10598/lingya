@@ -1,3 +1,11 @@
+# 苓雅通 V4｜長輩優先版
+
+**請先閱讀 [UPDATE-V4.md](UPDATE-V4.md)。整包覆蓋GitHub後重新部署，保留原資料庫與web／worker。**
+
+本版簡化首頁、加大文字及按鈕，支援一般字／大字。以下舊版說明保留作為資料整理與AdSense設定參考。
+
+---
+
 # 苓雅通 V3
 
 **請先閱讀 [UPDATE-V3.md](UPDATE-V3.md)：目前網站升級請整包覆蓋程式，保留Postgres與web／worker。**

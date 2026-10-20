@@ -5,7 +5,7 @@ class El{
  append(...x){this.children.push(...x)}replaceChildren(...x){this.children=x}get firstChild(){return this.children[0]}get selectedOptions(){return [{textContent:this.value}]}
  setAttribute(k,v){this.attrs[k]=v}scrollIntoView(){this.scrolled=true}focus(){this.focused=true}
 }
-const ids=['q','source','category','scope','when','items','count','results','results-title','result-note','quick-times','home-sections','active-filters','clear','advanced-filters','prev','next','page','source-list','agency-buttons','last','refresh-news','featured-events','featured-benefits','important','important-section','search-form','all-events','all-benefits'];
+const ids=['q','source','category','scope','when','items','count','results','results-title','result-note','quick-times','home-sections','active-filters','clear','advanced-filters','prev','next','page','source-list','agency-buttons','last','refresh-news','featured-events','featured-benefits','important','important-section','search-form','all-events','all-benefits','latest-panel'];
 const els=Object.fromEntries(ids.map(id=>[id,new El()]));
 const views=['all','events','benefits','notices'].map(view=>{const e=new El('button');e.dataset.view=view;return e});
 const whens=['','week','weekend','undated','past'].map(when=>{const e=new El('button');e.dataset.when=when;return e});

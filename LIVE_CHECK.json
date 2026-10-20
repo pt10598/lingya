@@ -1,13 +1,13 @@
 {
-  "version": "V3",
+  "version": "V4 senior-first",
   "tested_at": "2026-10-20",
-  "python_tests": 22,
-  "url_state_tests": "passed",
-  "frontend_flow_harness": "passed",
-  "javascript_syntax": "passed",
-  "legacy_upgrade": "15 original record IDs preserved; 15 records enriched",
-  "browser_visual_qa": "not completed: browser connection to local preview refused",
-  "heroku_deployed": false,
+  "python_tests": 25,
+  "url_state": "passed",
+  "frontend_flow": "passed",
+  "font_preference_and_storage_fallback": "passed",
+  "syntax": "passed",
+  "browser_visual_qa": "not completed: local preview inaccessible from browser",
+  "deployed": false,
   "other_districts_created": false,
   "ads_enabled_by_default": false
 }
