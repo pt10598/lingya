@@ -1,0 +1,8 @@
+[
+ {"id":"lingya-office","name":"苓雅區公所","kind":"html","url":"https://lingya.kcg.gov.tw/","scope":"local","selectors":["最新消息","新聞公告","市政宣導"],"license_url":"https://lingya.kcg.gov.tw/cp.aspx?n=1AE5097C483D7DF8","enabled":true},
+ {"id":"lingya-health","name":"苓雅區衛生所","kind":"html","url":"https://lya.kcg.gov.tw/","scope":"local","selectors":["最新消息","活動訊息","公告訊息"],"license_url":"https://lya.kcg.gov.tw/cp.aspx?n=B03DD6823DFA4D2F&s=0D0474C2DC4D0A0E","enabled":true},
+ {"id":"lingya-household","name":"苓雅戶政事務所","kind":"html","url":"https://lyhr-house.kcg.gov.tw/","scope":"local","selectors":["最新消息","活動訊息","宣導事項"],"license_url":"","enabled":true},
+ {"id":"kaohsiung-city","name":"高雄市政府","kind":"html","url":"https://www.kcg.gov.tw/","scope":"city","selectors":["最新消息","市政新聞"],"license_url":"https://www.kcg.gov.tw/","enabled":true},
+ {"id":"kaohsiung-travel","name":"高雄旅遊網","kind":"travel_xml","url":"https://khh.travel/zh-tw/OpenData/EventNgisXML","scope":"city","license_url":"https://data.gov.tw/dataset/138185","enabled":true},
+ {"id":"culture-events","name":"文化部藝文活動開放資料","kind":"culture_json","url":"https://cloud.culture.tw/frontsite/trans/SearchShowAction.do?method=doFindTypeJ&category=all","scope":"city","license_url":"https://opendata.culture.tw/frontsite/openData/detail?datasetId=302","enabled":true}
+]
