@@ -1,3 +1,11 @@
+# 苓雅通 V3
+
+**請先閱讀 [UPDATE-V3.md](UPDATE-V3.md)：目前網站升級請整包覆蓋程式，保留Postgres與web／worker。**
+
+V3新增資料整理、主題入口、不同卡片、活動過期處理、全文搜尋、URL狀態保留與新消息提示。以下V2文件保留供AdSense與基本部署參考。
+
+---
+
 # 苓雅通 V2｜單站母版
 
 **現有網站更新、AdSense與分區獨立部署請先閱讀 [UPDATE-V2.md](UPDATE-V2.md)。**

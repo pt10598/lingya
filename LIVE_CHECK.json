@@ -1,10 +1,12 @@
 {
-  "version": "V2",
+  "version": "V3",
   "tested_at": "2026-10-20",
-  "unit_tests": 11,
+  "python_tests": 22,
+  "url_state_tests": "passed",
+  "frontend_flow_harness": "passed",
   "javascript_syntax": "passed",
-  "upgrade": "V1.1 database snapshot retained item count",
-  "browser_qa": "not completed: cloud browser cannot reach local server (connection refused)",
+  "legacy_upgrade": "15 original record IDs preserved; 15 records enriched",
+  "browser_visual_qa": "not completed: browser connection to local preview refused",
   "heroku_deployed": false,
   "other_districts_created": false,
   "ads_enabled_by_default": false

@@ -9,9 +9,10 @@ from urllib.parse import urljoin, urlsplit, urlunsplit, parse_qsl, urlencode
 from urllib.robotparser import RobotFileParser
 import requests
 from bs4 import BeautifulSoup
-from app import app, db, Item, ArticleCache, SourceStatus, sources, now, status_key
+from app import app, db, Item, ArticleCache, SourceStatus, sources, now, status_key, enrich_record
 
 from settings import site_settings
+from content import category, enrich
 
 UA='DistrictTong/2.0 (+contact: '+os.getenv('CRAWLER_CONTACT','not-configured')+')'
 MAX_BYTES=20*1024*1024
@@ -76,9 +77,7 @@ def date(value):
     except (ValueError,TypeError,OverflowError):return ''
 
 def classify(title):
-    for cat,words in [('補助福利','補助|津貼|福利|補貼'),('交通生活','交通|施工|停水|停電|道路|垃圾'),('健康衛生','健康|衛生|疫苗|篩檢|登革熱'),('活動課程','活動|課程|講座|展覽|演出|報名|比賽|音樂|工作坊'),('徵才招考','徵才|招考|徵人|職缺')]:
-        if re.search(words,title):return cat
-    return '公告消息'
+    return category(title)
 
 # Matching only article/event fields; never the institution's footer address.
 def relevance(src,title,body,location=''):
@@ -98,7 +97,7 @@ def item(src,title,url,body='',published='',starts='',ends='',location=''):
     prefix='' if site_settings()['district']=='苓雅區' else site_settings()['district']+'|'
     return dict(id=hashlib.sha256((prefix+src['id']+'|'+url).encode()).hexdigest(),source=src['id'],title=title,
                 summary=body[:400],url=url,published=date(published),starts=date(starts),ends=date(ends),
-                location=clean(location),category=classify(title),scope=scope,reason=reason,synced=now())
+                location=clean(location),category=classify(title),scope=scope,reason=reason,synced=now(),_body=body)
 
 def parse_html_list(text,base):
     soup=BeautifulSoup(text,'html.parser');found={}
@@ -215,10 +214,14 @@ def sync_one(src):
                 adapter={'html':html_source,'travel_xml':travel,'culture_json':culture}[src['kind']]
                 records=adapter(src,text)
                 for data in records:
+                    full_body=data.pop('_body','')
                     existing=db.session.get(Item,data['id'])
                     if existing:
                         for k,v in data.items():setattr(existing,k,v)
-                    else:db.session.add(Item(**data))
+                    else:
+                        existing=Item(**data);db.session.add(existing)
+                    db.session.flush()
+                    enrich_record(existing,full_body)
                 s.state='成功';s.success=now();s.count=len(records)
                 s.message=f'本輪同步 {len(records)} 則符合條件資訊'
                 if src.get('_warnings'):
