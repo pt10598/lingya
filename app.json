@@ -1,1 +1,39 @@
-{"name":"苓雅通","description":"苓雅消息與活動整合平台","stack":"heroku-24","env":{"SYNC_SECONDS":{"value":"300"},"CRAWLER_CONTACT":{"description":"爬蟲聯絡 Email，會放在 User-Agent，請填入你可收信的地址","required":true}},"addons":["heroku-postgresql:essential-0"],"formation":{"web":{"quantity":1,"size":"basic"},"worker":{"quantity":1,"size":"basic"}}}
+{
+  "name": "苓雅通 V2",
+  "description": "苓雅生活資訊、活動整理、實用指南與AdSense設定母版",
+  "stack": "heroku-24",
+  "env": {
+    "SYNC_SECONDS": {
+      "value": "300"
+    },
+    "CRAWLER_CONTACT": {
+      "description": "爬蟲聯絡 Email，會放在 User-Agent，請填入你可收信的地址",
+      "required": true
+    },
+    "SITE_NAME": {
+      "value": "苓雅通"
+    },
+    "DISTRICT_NAME": {
+      "value": "苓雅區"
+    },
+    "CONTACT_EMAIL": {
+      "value": "irataieddie@gmail.com"
+    },
+    "ADSENSE_ENABLED": {
+      "value": "0"
+    }
+  },
+  "addons": [
+    "heroku-postgresql:essential-0"
+  ],
+  "formation": {
+    "web": {
+      "quantity": 1,
+      "size": "basic"
+    },
+    "worker": {
+      "quantity": 1,
+      "size": "basic"
+    }
+  }
+}

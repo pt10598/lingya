@@ -9,9 +9,11 @@ from urllib.parse import urljoin, urlsplit, urlunsplit, parse_qsl, urlencode
 from urllib.robotparser import RobotFileParser
 import requests
 from bs4 import BeautifulSoup
-from app import app, db, Item, ArticleCache, SourceStatus, sources, now
+from app import app, db, Item, ArticleCache, SourceStatus, sources, now, status_key
 
-UA='LingyaTong/1.0 (+contact: '+os.getenv('CRAWLER_CONTACT','not-configured')+')'
+from settings import site_settings
+
+UA='DistrictTong/2.0 (+contact: '+os.getenv('CRAWLER_CONTACT','not-configured')+')'
 MAX_BYTES=20*1024*1024
 _robots={}
 _last={}
@@ -80,8 +82,11 @@ def classify(title):
 
 # Matching only article/event fields; never the institution's footer address.
 def relevance(src,title,body,location=''):
-    if src.get('scope')=='local':return 'local','苓雅在地機關發布'
-    if re.search(r'苓雅|Lingya',title+' '+body+' '+location,re.I):return 'local','內容或地址提及苓雅'
+    site=site_settings()
+    if src.get('scope')=='local':
+        if src.get('districts') and site['district'] not in src['districts']:return None,None
+        return 'local',site['district']+'在地機關發布'
+    if any(re.search(re.escape(w),title+' '+body+' '+location,re.I) for w in site['keywords']):return 'local','內容或地址提及'+site['district']
     if re.search(r'高雄市民|全市|設籍高雄|本市市民|本市居民',title+' '+body):return 'citywide','全市適用，資格以原文為準'
     return None,None
 
@@ -90,7 +95,8 @@ def item(src,title,url,body='',published='',starts='',ends='',location=''):
     if not url or not title:return None
     body=clean(body);scope,reason=relevance(src,title,body,location)
     if not scope:return None
-    return dict(id=hashlib.sha256((src['id']+'|'+url).encode()).hexdigest(),source=src['id'],title=title,
+    prefix='' if site_settings()['district']=='苓雅區' else site_settings()['district']+'|'
+    return dict(id=hashlib.sha256((prefix+src['id']+'|'+url).encode()).hexdigest(),source=src['id'],title=title,
                 summary=body[:400],url=url,published=date(published),starts=date(starts),ends=date(ends),
                 location=clean(location),category=classify(title),scope=scope,reason=reason,synced=now())
 
@@ -185,7 +191,7 @@ def culture(src,text):
         shows=d.get('showInfo') or []
         loc=' '.join(str(x.get('location',''))+' '+str(x.get('locationName','')) for x in shows)
         body=d.get('descriptionFilterHtml','')
-        if '高雄' not in loc and '苓雅' not in loc+str(body):continue
+        if site_settings()['city'] not in loc and not any(w in loc+str(body) for w in site_settings()['keywords']):continue
         url=d.get('sourceWebPromote') or d.get('webSales')
         if not url:continue
         v=item(src,d.get('title'),url,body,d.get('editModifyDate',''),d.get('startDate',''),d.get('endDate',''),loc)
@@ -195,7 +201,7 @@ def culture(src,text):
 
 def sync_one(src):
     with app.app_context():
-        s=db.session.get(SourceStatus,src['id']) or SourceStatus(id=src['id'])
+        s=db.session.get(SourceStatus,status_key(src['id'])) or SourceStatus(id=status_key(src['id']))
         s.checked=now();db.session.add(s)
         try:
             conditional={}
@@ -221,7 +227,7 @@ def sync_one(src):
             db.session.commit()
         except Exception as e:
             db.session.rollback()
-            s=db.session.get(SourceStatus,src['id']) or SourceStatus(id=src['id'])
+            s=db.session.get(SourceStatus,status_key(src['id'])) or SourceStatus(id=status_key(src['id']))
             s.checked=now();s.state='失敗';s.message=str(e)[:450]
             db.session.add(s);db.session.commit()
         return src['id'],s.state,s.message

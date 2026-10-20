@@ -1,55 +1,11 @@
 {
-  "verified_at": "2026-10-20",
-  "method": "實際網路同步；HTML各來源最多1篇詳細頁的抽樣驗證，旅遊XML全檔解析；先前亦測試過各在地來源3篇。非完整機關覆蓋驗證。",
-  "sources": [
-    {
-      "id": "kaohsiung-city",
-      "state": "成功",
-      "checked": "2026-10-20T05:52:55+00:00",
-      "count": 0,
-      "message": "本輪同步 0 則符合條件資訊"
-    },
-    {
-      "id": "kaohsiung-travel",
-      "state": "成功",
-      "checked": "2026-10-20T05:53:07+00:00",
-      "count": 6,
-      "message": "本輪同步 6 則符合條件資訊"
-    },
-    {
-      "id": "lingya-health",
-      "state": "成功",
-      "checked": "2026-10-20T05:52:55+00:00",
-      "count": 1,
-      "message": "本輪同步 1 則符合條件資訊"
-    },
-    {
-      "id": "culture-events",
-      "state": "失敗",
-      "checked": "2026-10-20T05:53:23+00:00",
-      "count": 0,
-      "message": "robots.txt 不允許此路徑"
-    },
-    {
-      "id": "lingya-household",
-      "state": "成功",
-      "checked": "2026-10-20T05:52:55+00:00",
-      "count": 1,
-      "message": "本輪同步 1 則符合條件資訊"
-    },
-    {
-      "id": "lingya-office",
-      "state": "成功",
-      "checked": "2026-10-20T05:52:55+00:00",
-      "count": 1,
-      "message": "本輪同步 1 則符合條件資訊"
-    }
-  ],
-  "tests": "5 unit tests passed; JavaScript node --check passed",
-  "limitations": [
-    "未部署至使用者Heroku",
-    "未執行瀏覽器視覺驗證",
-    "文化部robots限制，未接入",
-    "未涵蓋所有機關或歷史分頁"
-  ]
+  "version": "V2",
+  "tested_at": "2026-10-20",
+  "unit_tests": 11,
+  "javascript_syntax": "passed",
+  "upgrade": "V1.1 database snapshot retained item count",
+  "browser_qa": "not completed: cloud browser cannot reach local server (connection refused)",
+  "heroku_deployed": false,
+  "other_districts_created": false,
+  "ads_enabled_by_default": false
 }
