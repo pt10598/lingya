@@ -79,6 +79,16 @@
     "url": "https://cloud.culture.tw/frontsite/trans/SearchShowAction.do?method=doFindTypeJ&category=all",
     "scope": "city",
     "license_url": "https://opendata.culture.tw/frontsite/openData/detail?datasetId=302",
+    "enabled": false,
+    "disabled_reason": "暫停文化部來源，先以高雄市文化局補充在地藝文消息；不代表完整替代。"
+  },
+  {
+    "id": "kaohsiung-culture",
+    "name": "高雄市政府文化局／文化中心",
+    "kind": "khcc_html",
+    "url": "https://khcc.kcg.gov.tw/rwd_home06.aspx",
+    "scope": "city",
+    "license_url": "https://khcc.kcg.gov.tw/rwd_home03.aspx?DATA=-1&EXEC=L&ID=%249015&IDK=2",
     "enabled": true
   }
 ]

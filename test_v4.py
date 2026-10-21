@@ -17,7 +17,7 @@ class SeniorTests(unittest.TestCase):
   for p in ['/','/services','/privacy','/guides/plan-a-weekend']:
    s=BeautifulSoup(self.c.get(p).data,'html.parser')
    self.assertEqual(s.select_one('#font-large').get_text(),'大字')
-   self.assertIsNotNone(s.select_one('script[src="/static/reading.js?v=5.0"]'))
+   self.assertIsNotNone(s.select_one('script[src="/static/reading.js?v=6.0"]'))
    self.assertIsNotNone(s.select_one('a[href="#main-content"]'))
  def test_privacy_discloses_local_font_preference(self):
   self.assertIn('本機儲存',self.c.get('/privacy').get_data(as_text=True))

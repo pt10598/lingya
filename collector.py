@@ -204,14 +204,15 @@ def sync_one(src):
         s.checked=now();db.session.add(s)
         try:
             conditional={}
-            if src['kind']!='html':
+            if src['kind'] not in ('html','khcc_html'):
                 if s.etag:conditional['If-None-Match']=s.etag
                 if s.modified:conditional['If-Modified-Since']=s.modified
             text,headers=fetch(src['url'],conditional)
             if text is None:
                 s.state='成功';s.success=now();s.message='來源未變更（304）'
             else:
-                adapter={'html':html_source,'travel_xml':travel,'culture_json':culture}[src['kind']]
+                from khcc import collect as khcc_collect
+                adapter={'khcc_html':khcc_collect,'html':html_source,'travel_xml':travel,'culture_json':culture}[src['kind']]
                 records=adapter(src,text)
                 for data in records:
                     full_body=data.pop('_body','')

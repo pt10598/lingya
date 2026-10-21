@@ -131,9 +131,9 @@ def api_sources():
     result=[]
     for src in sources():
         s=stats.get(status_key(src['id']))
-        result.append({**src, 'status':s.state if s else '尚未同步',
+        result.append({**src, 'status':('暫停收錄' if not src.get('enabled') else (s.state if s else '尚未同步')),
                        'checked':s.checked if s else None,'last_success':s.success if s else None,
-                       'message':s.message if s else '啟動 worker 後開始同步',
+                       'message':src.get('disabled_reason') if not src.get('enabled') else (s.message if s else '啟動 worker 後開始同步'),
                        'count':s.count if s else 0})
     return jsonify(result)
 

@@ -49,7 +49,7 @@ async function homeSections(){
 }
 async function sourceStatus(initial=false){try{const r=await fetch('/api/sources');if(!r.ok)throw Error();const d=await r.json();
  let signature='';try{const revision=await fetch('/api/revision');if(revision.ok)signature=(await revision.json()).revision}catch{}
- const dates=d.map(s=>s.last_success).filter(Boolean).sort();const bad=d.filter(s=>s.status==='失敗').length;
+ const dates=d.map(s=>s.last_success).filter(Boolean).sort();const bad=d.filter(s=>['失敗','部分成功'].includes(s.status)).length;
  $('last').textContent=(dates.length?'最近成功同步 '+time(dates.at(-1)):'尚未成功同步')+(bad?' · 部分來源更新延遲':'');
  if(initial){$('source').replaceChildren(node('option','所有單位'));$('source').firstChild.value='';$('agency-buttons').replaceChildren();
  for(const s of [{id:'',name:'全部單位'},...d]){if(s.id){names[s.id]=s.name;const o=node('option',s.name);o.value=s.id;$('source').append(o)}const b=node('button',s.name,'agency-button');b.type='button';b.dataset.source=s.id;b.onclick=()=>change({source:s.id});$('agency-buttons').append(b)}
